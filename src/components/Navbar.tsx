@@ -1,16 +1,17 @@
 // src/components/Navbar.tsx
 //
-// Mobile nav pattern deliberately modeled on whatsapp.com/security
-// (§7 — explicit UX reference): hamburger opens a full-screen dark
-// overlay, flat list of links with hairline dividers, chevron for
-// links that go deeper, diagonal arrow for links that leave the
-// site, and a pill-shaped primary CTA pinned at the bottom.
+// Glass sticky bar, icon-only brand mark (no wordmark text), full-
+// screen mobile overlay modeled on whatsapp.com's actual pattern:
+// flat list of links with hairline dividers, chevron for links that
+// go deeper, one pill CTA pinned at the bottom. Flat colors only —
+// no gradient, no color fill beyond the CTA pill and the icon itself.
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X, ChevronRight, ArrowUpRight } from "lucide-react";
-import { Wordmark } from "./Wordmark";
+import { AppIcon } from "./AppIcon";
+import { Container } from "./Container";
 
-const LINKS: { label: string; to: string; external?: boolean }[] = [
+const LINKS: { label: string; to: string }[] = [
   { label: "Home", to: "/" },
   { label: "About", to: "/about" },
   { label: "Security", to: "/security" },
@@ -25,72 +26,70 @@ export function Navbar() {
   const location = useLocation();
 
   return (
-    <header className="site-dark sticky top-0 z-50 bg-[var(--color-canvas)] border-b border-[var(--color-border)]">
-      <div className="max-w-6xl mx-auto flex items-center justify-between px-4 h-16">
-        <button
-          onClick={() => setOpen(true)}
-          aria-label="Open menu"
-          className="text-[var(--color-ink)] p-2 -ml-2"
-        >
-          <Menu size={26} />
+    <header className="site-dark sticky top-0 z-50 glass">
+      <Container className="flex items-center justify-between h-16">
+        <button onClick={() => setOpen(true)} aria-label="Open menu" className="text-[var(--color-ink)] p-2 -ml-2">
+          <Menu size={24} />
         </button>
 
-        <Link to="/" className="tracking-tight">
-          <Wordmark className="text-2xl" />
+        <Link to="/" aria-label="Akọ home">
+          <AppIcon size={34} />
         </Link>
 
         <a
           href="/download"
-          className="w-10 h-10 rounded-full bg-accent flex items-center justify-center text-[var(--color-canvas)]"
+          className="w-9 h-9 rounded-full bg-accent flex items-center justify-center text-white"
           aria-label="Get Akọ"
         >
-          <ArrowUpRight size={20} />
+          <ArrowUpRight size={18} />
         </a>
-      </div>
+      </Container>
 
       {open && (
-        <div className="fixed inset-0 z-50 bg-[var(--color-canvas)] flex flex-col">
-          <div className="flex items-center justify-between px-4 h-16 border-b border-[var(--color-border)]">
+        <div className="site-dark fixed inset-0 z-50 bg-[var(--color-canvas)] flex flex-col">
+          <Container className="flex items-center justify-between h-16 border-b border-[var(--color-border)]">
             <button onClick={() => setOpen(false)} aria-label="Close menu" className="p-2 -ml-2 text-[var(--color-ink)]">
-              <X size={26} />
+              <X size={24} />
             </button>
-            <Wordmark className="text-2xl" />
+            <AppIcon size={30} />
             <a
               href="/download"
-              className="w-10 h-10 rounded-full bg-accent flex items-center justify-center text-[var(--color-canvas)]"
+              className="w-9 h-9 rounded-full bg-accent flex items-center justify-center text-white"
             >
-              <ArrowUpRight size={20} />
+              <ArrowUpRight size={18} />
             </a>
-          </div>
+          </Container>
 
-          <nav className="flex-1 overflow-y-auto px-4 py-2">
-            {LINKS.map((link) => {
-              const isActive = location.pathname === link.to;
-              return (
-                <Link
-                  key={link.to}
-                  to={link.to}
-                  onClick={() => setOpen(false)}
-                  className={`flex items-center justify-between py-5 border-b border-[var(--color-border)] text-3xl font-display ${
-                    isActive ? "text-accent" : "text-[var(--color-ink)]"
-                  }`}
-                >
-                  {link.label}
-                  <ChevronRight size={22} className="text-accent" />
-                </Link>
-              );
-            })}
+          <nav className="flex-1 overflow-y-auto">
+            <Container>
+              {LINKS.map((link) => {
+                const isActive = location.pathname === link.to;
+                return (
+                  <Link
+                    key={link.to}
+                    to={link.to}
+                    onClick={() => setOpen(false)}
+                    className={`flex items-center justify-between py-5 border-b border-[var(--color-border)] text-2xl font-display ${
+                      isActive ? "text-[var(--color-ink)]" : "text-[var(--color-ink-muted)]"
+                    }`}
+                  >
+                    {link.label}
+                    <ChevronRight size={20} className="text-[var(--color-ink-muted)]" />
+                  </Link>
+                );
+              })}
+            </Container>
           </nav>
 
-          <div className="px-4 pb-8 pt-4">
+          <Container className="pb-8 pt-4">
             <a
               href="/download"
               onClick={() => setOpen(false)}
-              className="flex items-center justify-center gap-2 w-full bg-accent text-[var(--color-canvas)] font-medium rounded-full py-4"
+              className="flex items-center justify-center gap-2 w-full bg-accent text-white font-medium rounded-full py-4"
             >
               Get Akọ <ArrowUpRight size={18} />
             </a>
-          </div>
+          </Container>
         </div>
       )}
     </header>

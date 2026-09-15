@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { LogOut } from "lucide-react";
 import { supabase } from "../../lib/supabase";
+import { AppIcon } from "../../components/AppIcon";
 
 const NAV = [
   { label: "Overview", to: "/admin" },
@@ -26,7 +27,10 @@ export function AdminLayout({ children }: { children: ReactNode }) {
   return (
     <div className="min-h-screen flex bg-[var(--color-canvas)]">
       <aside className="w-56 shrink-0 border-r border-[var(--color-border)] p-4 flex flex-col">
-        <p className="font-display text-xl mb-6 px-2">Akọ Admin</p>
+        <div className="mb-6 px-2 flex items-center gap-2">
+          <AppIcon size={24} />
+          <span className="text-sm text-[var(--color-ink-muted)]">Admin</span>
+        </div>
         <nav className="flex-1 space-y-1">
           {NAV.map((item) => (
             <Link

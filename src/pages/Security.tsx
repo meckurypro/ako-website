@@ -1,12 +1,14 @@
 // src/pages/Security.tsx
 import { Seo } from "../components/Seo";
+import { Container } from "../components/Container";
+import { AppIcon } from "../components/AppIcon";
 import { ShieldCheck, Lock, Eye, Bell } from "lucide-react";
 
 const CARDS = [
   {
     icon: Lock,
     title: "Private by default",
-    body: "Your profile, posts, and messages are visible only to the people you choose. No public-by-default surprises.",
+    body: "Your profile, posts, and messages are visible only to the people you choose.",
   },
   {
     icon: Eye,
@@ -25,35 +27,37 @@ const CARDS = [
   },
 ];
 
+// Full page, one consistent dark theme — not a dark hero dropped
+// into an otherwise light page. This is the WhatsApp reference
+// pattern (§7): the whole surface commits to one tone.
 export function Security() {
   return (
-    <div className="site-dark bg-[var(--color-canvas)]">
+    <div className="site-dark bg-[var(--color-canvas)] min-h-screen">
       <Seo
         title="Secure by design"
         description="How Akọ keeps your account, conversations, and payments safe."
         path="/security"
       />
-      <div className="max-w-3xl mx-auto px-4 py-20 text-[var(--color-ink)]">
-        <h1 className="font-display text-5xl leading-tight mb-6">
-          <span className="text-accent">Secure</span> by design
-        </h1>
-        <p className="text-[var(--color-ink-muted)] text-lg mb-16 max-w-xl">
-          To keep you safe, we've designed Akọ with world-class security, built tools to put you
-          in control, and we're there to support you when you need it.
+      <Container className="py-20 max-w-3xl">
+        <AppIcon size={40} />
+        <h1 className="font-display text-5xl leading-tight mt-6 mb-6">Secure by design</h1>
+        <p className="text-[var(--color-ink-muted)] text-lg mb-14 max-w-xl">
+          To keep you safe, we've built Akọ with security by default, tools to put you in
+          control, and support when you need it.
         </p>
 
-        <div className="grid gap-10">
+        <div className="grid gap-4">
           {CARDS.map(({ icon: Icon, title, body }) => (
-            <div key={title} className="flex gap-4">
-              <Icon className="text-accent shrink-0 mt-1" size={28} />
+            <div key={title} className="glass rounded-2xl p-6 flex gap-4">
+              <Icon className="shrink-0 mt-1" size={24} style={{ color: "var(--color-flame)" }} />
               <div>
-                <h2 className="font-display text-2xl mb-2">{title}</h2>
-                <p className="text-[var(--color-ink-muted)]">{body}</p>
+                <h2 className="font-display text-xl mb-1">{title}</h2>
+                <p className="text-[var(--color-ink-muted)] text-sm">{body}</p>
               </div>
             </div>
           ))}
         </div>
-      </div>
+      </Container>
     </div>
   );
 }

@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Loader2 } from "lucide-react";
 import { supabase } from "../../lib/supabase";
 import { Seo } from "../../components/Seo";
+import { AppIcon } from "../../components/AppIcon";
 
 export function AdminLogin() {
   const navigate = useNavigate();
@@ -34,7 +35,10 @@ export function AdminLogin() {
     <div className="min-h-screen flex items-center justify-center bg-[var(--color-canvas)] px-4">
       <Seo title="Admin sign in" description="Akọ admin console." path="/admin/login" noindex />
       <form onSubmit={handleSubmit} className="w-full max-w-sm">
-        <h1 className="font-display text-2xl mb-6">Akọ Admin</h1>
+        <div className="mb-6 flex items-center gap-2">
+          <AppIcon size={28} />
+          <span className="text-[var(--color-ink-muted)] text-sm">Admin</span>
+        </div>
         <div className="mb-4">
           <label className="block text-sm font-medium mb-1" htmlFor="email">Email</label>
           <input
