@@ -1,5 +1,6 @@
 // src/components/Footer.tsx
 import { Link } from "react-router-dom";
+import { Wordmark } from "./Wordmark";
 
 export function Footer() {
   const year = new Date().getFullYear();
@@ -32,7 +33,7 @@ export function Footer() {
         </div>
         <div>
           <p className="text-[var(--color-ink-muted)] font-medium mb-3">Akọ</p>
-          <p className="font-display text-2xl text-accent">Akọ</p>
+          <Wordmark className="text-2xl" />
         </div>
       </div>
       <div className="border-t border-[var(--color-border)] py-6 text-center text-xs text-[var(--color-ink-muted)]">
