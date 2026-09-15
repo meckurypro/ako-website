@@ -1,4 +1,5 @@
 // src/App.tsx
+import { Suspense, lazy } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { AuthProvider } from "./hooks/useAuth";
@@ -17,13 +18,19 @@ import { Contact } from "./pages/Contact";
 import { Download } from "./pages/Download";
 import { NotFound } from "./pages/NotFound";
 
-import { Deposit } from "./pages/pay/Deposit";
-import { Callback } from "./pages/pay/Callback";
+// Payment and admin are lazy-loaded into their own chunks (§187-189
+// route-level code splitting): a first-time visitor reading the
+// homepage never downloads the Supabase-auth-heavy admin console,
+// and vice versa — each bundle only pays for what that visit needs.
+const Deposit = lazy(() => import("./pages/pay/Deposit").then((m) => ({ default: m.Deposit })));
+const Callback = lazy(() => import("./pages/pay/Callback").then((m) => ({ default: m.Callback })));
 
-import { AdminLogin } from "./pages/admin/AdminLogin";
-import { AdminHome } from "./pages/admin/AdminHome";
-import { AdminDeposits } from "./pages/admin/AdminDeposits";
-import { AdminPlaceholder } from "./pages/admin/AdminPlaceholder";
+const AdminLogin = lazy(() => import("./pages/admin/AdminLogin").then((m) => ({ default: m.AdminLogin })));
+const AdminHome = lazy(() => import("./pages/admin/AdminHome").then((m) => ({ default: m.AdminHome })));
+const AdminDeposits = lazy(() => import("./pages/admin/AdminDeposits").then((m) => ({ default: m.AdminDeposits })));
+const AdminPlaceholder = lazy(() =>
+  import("./pages/admin/AdminPlaceholder").then((m) => ({ default: m.AdminPlaceholder }))
+);
 
 const queryClient = new QueryClient();
 
@@ -41,12 +48,21 @@ function MarketingLayout({ children }: { children: React.ReactNode }) {
   );
 }
 
+function RouteFallback() {
+  return (
+    <div className="min-h-[50vh] flex items-center justify-center">
+      <div className="w-6 h-6 rounded-full border-2 border-accent border-t-transparent animate-spin" />
+    </div>
+  );
+}
+
 export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
         <BrowserRouter>
-          <Routes>
+          <Suspense fallback={<RouteFallback />}>
+            <Routes>
               <Route path="/" element={<MarketingLayout><Home /></MarketingLayout>} />
               <Route path="/about" element={<MarketingLayout><About /></MarketingLayout>} />
               <Route path="/security" element={<MarketingLayout><Security /></MarketingLayout>} />
@@ -86,8 +102,9 @@ export default function App() {
                 element={<RequireAdmin><AdminPlaceholder title="Reports" sourceHook="useReports" /></RequireAdmin>}
               />
 
-            <Route path="*" element={<MarketingLayout><NotFound /></MarketingLayout>} />
-          </Routes>
+              <Route path="*" element={<MarketingLayout><NotFound /></MarketingLayout>} />
+            </Routes>
+          </Suspense>
         </BrowserRouter>
       </AuthProvider>
     </QueryClientProvider>
