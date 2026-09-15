@@ -1,6 +1,7 @@
 // src/pages/Home.tsx
 import { Seo } from "../components/Seo";
 import { DownloadButtons } from "../components/DownloadButtons";
+import { Wordmark } from "../components/Wordmark";
 
 const PILLARS = [
   {
@@ -21,16 +22,16 @@ export function Home() {
   return (
     <>
       <Seo
-        title="Akọ — where your circle actually shows up"
-        description="Akọ is the social app built for real circles, not endless strangers. Feed, projects, wallet, and messaging — private by default, warm by design."
+        title="Akọ — a reason to reason"
+        description="Akọ is the social platform for discovering ideas, connecting people, and building value — warm and private by design."
         path="/"
       />
 
-      <section className="site-dark bg-[var(--color-canvas)] pt-16 pb-24 px-4">
+      <section className="site-dark ambient-glow bg-[var(--color-canvas)] pt-16 pb-24 px-4">
         <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
           <div>
             <h1 className="font-display text-5xl md:text-6xl text-[var(--color-ink)] leading-[1.05] mb-6">
-              Your circle, <span className="text-accent">not the crowd</span>.
+              Your circle, <span className="text-flame">not the crowd</span>.
             </h1>
             <p className="text-[var(--color-ink-muted)] text-lg mb-8 max-w-md">
               Akọ is a home for the people you actually talk to — feed, projects, wallet, and
@@ -45,12 +46,15 @@ export function Home() {
               same slot without touching layout. */}
           <div className="flex justify-center">
             <div className="w-[260px] h-[540px] rounded-[2.5rem] border-8 border-[var(--color-ink)] bg-[var(--color-surface)] shadow-2xl overflow-hidden relative">
-              <div className="h-14 bg-accent flex items-end pb-3 px-4">
-                <span className="text-[var(--color-canvas)] font-display text-lg">Akọ</span>
+              <div className="h-16 bg-accent flex flex-col items-center justify-center gap-0.5">
+                <Wordmark className="text-lg" />
+                <span className="text-[10px] tracking-wide" style={{ color: "var(--color-canvas)" }}>
+                  ideas. people. possibilities.
+                </span>
               </div>
               <div className="p-4 space-y-3">
                 <div className="h-20 rounded-xl bg-[var(--color-accent-soft)]" />
-                <div className="h-32 rounded-xl bg-[var(--color-accent-soft)]" />
+                <div className="h-32 rounded-xl bg-[var(--color-flame-soft)]" />
                 <div className="h-20 rounded-xl bg-[var(--color-accent-soft)]" />
               </div>
             </div>
@@ -69,7 +73,7 @@ export function Home() {
         </div>
       </section>
 
-      <section className="site-dark bg-[var(--color-canvas)] py-20 px-4 text-center">
+      <section className="site-dark ambient-glow bg-[var(--color-canvas)] py-20 px-4 text-center">
         <h2 className="font-display text-3xl md:text-4xl text-[var(--color-ink)] mb-4">
           Come find your people.
         </h2>

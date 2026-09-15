@@ -2,21 +2,35 @@
 @import "tailwindcss";
 
 /*
-  Same token set as the Akọ app (src/index.css there) — this is a
-  second frontend over the same brand, not a new visual language.
-  Only the tokens this site actually uses are carried over; chat/
-  wallet-bubble/presence tokens from the app were left out since
-  nothing here renders those surfaces.
+  Palette pulled directly from the àkọ́ brand sheet (wordmark, app
+  icon, signage mockup) — not the app repo's muted sage tokens. The
+  brand's real colors are a warm forest green and a genuinely vivid
+  orange, on a soft cream (light) or deep green-black (dark), and
+  the previous tokens flattened both into something duller than the
+  mark itself. This is warmer and higher-contrast on purpose: it's
+  meant to feel like sitting inside the logo, not adjacent to it.
 */
 @theme {
-  --color-canvas: #F7F4EF;
-  --color-surface: #FDFBF6;
-  --color-ink: #1F1D1A;
-  --color-ink-muted: #6B675F;
-  --color-accent: #3D5A45;
-  --color-accent-hover: #2F4636;
-  --color-accent-soft: #E3E9E1;
-  --color-border: #E9E4D8;
+  --color-canvas: #FBF6EC;         /* soft warm cream, not stark white */
+  --color-surface: #FFFDF8;        /* barely-warm surface for cards */
+  --color-ink: #241E14;            /* warm near-black, brown-based not blue-based */
+  --color-ink-muted: #7A6F5C;      /* warm taupe, not cool grey */
+
+  --color-accent: #1E7A42;         /* the wordmark's forest green */
+  --color-accent-hover: #155C33;
+  --color-accent-soft: #E7F0E1;    /* warm mint tint for badges/backgrounds */
+
+  --color-flame: #EF6C1A;          /* the wordmark's orange — secondary
+                                       accent, used sparingly as the
+                                       "warm" pop (underlines, the dot
+                                       under the ọ́, hover glows) rather
+                                       than filling large areas, same
+                                       restraint the brand sheet itself
+                                       uses */
+  --color-flame-hover: #D85A0F;
+  --color-flame-soft: #FCE7D6;
+
+  --color-border: #EEE4D2;         /* warm hairline, not cool grey */
   --color-danger: #A64B3F;
 
   --font-display: "Playfair Display", Georgia, serif;
@@ -24,17 +38,17 @@
 }
 
 /*
-  Website-only dark chrome — the WhatsApp reference nav/footer this
-  spec is modeled on (§7) uses a near-black overlay with the accent
-  as the pop of color, distinct from the warm canvas the marketing
-  body sits on. Scoped to .site-dark so it never leaks into page
-  content, which stays on the normal light tokens above.
+  Dark chrome — matches the app-icon's actual background (a deep,
+  warm forest green-black, not a generic near-black) so the nav/
+  footer feels like part of the same object as the logo mark, the
+  way the brand sheet's dark panels do.
 */
 .site-dark {
-  --color-canvas: #14140F;
-  --color-ink: #F7F4EF;
-  --color-ink-muted: #A9A69C;
-  --color-border: #2A291F;
+  --color-canvas: #11251A;
+  --color-surface: #17301F;
+  --color-ink: #F8F1E1;
+  --color-ink-muted: #A9AE9B;
+  --color-border: #24402D;
 }
 
 html {
@@ -45,6 +59,29 @@ body {
   background-color: var(--color-canvas);
   color: var(--color-ink);
   font-family: var(--font-body);
+}
+
+/*
+  Soft ambient glow — a low-opacity bloom of the two brand colors,
+  used behind hero/CTA sections instead of a flat fill. This is what
+  actually reads as "warm and ambient" rather than just recoloring
+  the same flat blocks; keep it subtle, it's atmosphere, not a
+  decoration to notice on its own.
+*/
+.ambient-glow {
+  position: relative;
+  isolation: isolate;
+}
+.ambient-glow::before {
+  content: "";
+  position: absolute;
+  inset: -20%;
+  z-index: -1;
+  background:
+    radial-gradient(45% 55% at 15% 10%, color-mix(in srgb, var(--color-flame) 22%, transparent), transparent 70%),
+    radial-gradient(55% 65% at 90% 30%, color-mix(in srgb, var(--color-accent) 28%, transparent), transparent 70%);
+  filter: blur(40px);
+  pointer-events: none;
 }
 
 @media (prefers-reduced-motion: reduce) {

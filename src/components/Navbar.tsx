@@ -8,6 +8,7 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X, ChevronRight, ArrowUpRight } from "lucide-react";
+import { Wordmark } from "./Wordmark";
 
 const LINKS: { label: string; to: string; external?: boolean }[] = [
   { label: "Home", to: "/" },
@@ -34,8 +35,8 @@ export function Navbar() {
           <Menu size={26} />
         </button>
 
-        <Link to="/" className="font-display text-2xl text-accent tracking-tight">
-          Akọ
+        <Link to="/" className="tracking-tight">
+          <Wordmark className="text-2xl" />
         </Link>
 
         <a
@@ -53,7 +54,7 @@ export function Navbar() {
             <button onClick={() => setOpen(false)} aria-label="Close menu" className="p-2 -ml-2 text-[var(--color-ink)]">
               <X size={26} />
             </button>
-            <span className="font-display text-2xl text-accent">Akọ</span>
+            <Wordmark className="text-2xl" />
             <a
               href="/download"
               className="w-10 h-10 rounded-full bg-accent flex items-center justify-center text-[var(--color-canvas)]"
