@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /pay
+Disallow: /pay/callback
+
+Sitemap: https://ako.app/sitemap.xml
