@@ -1,7 +1,8 @@
 // src/pages/Home.tsx
 import { Seo } from "../components/Seo";
 import { DownloadButtons } from "../components/DownloadButtons";
-import { Wordmark } from "../components/Wordmark";
+import { AppIcon } from "../components/AppIcon";
+import { Container } from "../components/Container";
 
 const PILLARS = [
   {
@@ -23,66 +24,74 @@ export function Home() {
     <>
       <Seo
         title="Akọ — a reason to reason"
-        description="Akọ is the social platform for discovering ideas, connecting people, and building value — warm and private by design."
+        description="Akọ is the social platform for discovering ideas, connecting people, and building value."
         path="/"
       />
 
-      <section className="site-dark ambient-glow bg-[var(--color-canvas)] pt-16 pb-24 px-4">
-        <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+      {/* Light theme throughout — this is the "front door" page,
+          kept calm and minimal rather than alternating tone
+          mid-page. Security/Download opt into the dark theme
+          instead, each as one consistent full page. */}
+      <section className="pt-20 pb-24">
+        <Container className="grid md:grid-cols-2 gap-12 items-center">
           <div>
-            <h1 className="font-display text-5xl md:text-6xl text-[var(--color-ink)] leading-[1.05] mb-6">
-              Your circle, <span className="text-flame">not the crowd</span>.
+            <AppIcon size={48} />
+            <h1 className="font-display text-5xl md:text-6xl leading-[1.05] mt-6 mb-6">
+              Your circle,{" "}
+              <span className="relative">
+                not the crowd
+                <span
+                  className="absolute left-0 right-0 -bottom-1 h-[3px] rounded-full"
+                  style={{ backgroundColor: "var(--color-flame)" }}
+                />
+              </span>
+              .
             </h1>
             <p className="text-[var(--color-ink-muted)] text-lg mb-8 max-w-md">
-              Akọ is a home for the people you actually talk to — feed, projects, wallet, and
-              messaging, built warm and private from the ground up.
+              A home for the people you actually talk to — feed, projects, wallet, and messaging.
             </p>
             <DownloadButtons />
           </div>
 
-          {/* Lightweight CSS phone mockup — no 3D library weight on
-              first paint (§62 — 3D performance budget); a real
-              WebGL/Spline mockup can replace this later behind the
-              same slot without touching layout. */}
+          {/* Lightweight CSS phone mockup, kept minimal/neutral —
+              no 3D library weight on first paint (§62 — 3D
+              performance budget). */}
           <div className="flex justify-center">
-            <div className="w-[260px] h-[540px] rounded-[2.5rem] border-8 border-[var(--color-ink)] bg-[var(--color-surface)] shadow-2xl overflow-hidden relative">
-              <div className="h-16 bg-accent flex flex-col items-center justify-center gap-0.5">
-                <Wordmark className="text-lg" />
-                <span className="text-[10px] tracking-wide" style={{ color: "var(--color-canvas)" }}>
-                  ideas. people. possibilities.
-                </span>
+            <div className="glass w-[260px] h-[520px] rounded-[2.5rem] p-4">
+              <div className="flex justify-center pt-4 pb-6">
+                <AppIcon size={40} />
               </div>
-              <div className="p-4 space-y-3">
-                <div className="h-20 rounded-xl bg-[var(--color-accent-soft)]" />
-                <div className="h-32 rounded-xl bg-[var(--color-flame-soft)]" />
-                <div className="h-20 rounded-xl bg-[var(--color-accent-soft)]" />
+              <div className="space-y-3">
+                <div className="h-20 rounded-2xl border border-[var(--color-border)]" />
+                <div className="h-32 rounded-2xl border border-[var(--color-border)]" />
+                <div className="h-20 rounded-2xl border border-[var(--color-border)]" />
               </div>
             </div>
           </div>
-        </div>
+        </Container>
       </section>
 
-      <section className="max-w-6xl mx-auto px-4 py-20">
-        <div className="grid md:grid-cols-3 gap-10">
+      <section className="py-20 border-t border-[var(--color-border)]">
+        <Container className="grid md:grid-cols-3 gap-6">
           {PILLARS.map((p) => (
-            <div key={p.title}>
+            <div key={p.title} className="glass rounded-2xl p-6">
               <h2 className="font-display text-2xl mb-3">{p.title}</h2>
               <p className="text-[var(--color-ink-muted)]">{p.body}</p>
             </div>
           ))}
-        </div>
+        </Container>
       </section>
 
-      <section className="site-dark ambient-glow bg-[var(--color-canvas)] py-20 px-4 text-center">
-        <h2 className="font-display text-3xl md:text-4xl text-[var(--color-ink)] mb-4">
-          Come find your people.
-        </h2>
-        <p className="text-[var(--color-ink-muted)] mb-8">
-          Free to join. Available wherever you are.
-        </p>
-        <div className="flex justify-center">
-          <DownloadButtons />
-        </div>
+      <section className="py-20 border-t border-[var(--color-border)] text-center">
+        <Container>
+          <h2 className="font-display text-3xl md:text-4xl mb-4">Come find your people.</h2>
+          <p className="text-[var(--color-ink-muted)] mb-8">
+            Free to join. Available wherever you are.
+          </p>
+          <div className="flex justify-center">
+            <DownloadButtons />
+          </div>
+        </Container>
       </section>
     </>
   );
